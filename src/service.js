@@ -1,5 +1,10 @@
 import axios from 'axios'
 import { baseUrl } from './config'
+import { userId } from "./store";
+
+let id
+
+userId.subscribe(value => id = value)
 
 export async function getUserId(userName) {
     try {
@@ -30,6 +35,20 @@ export async function getStreams() {
         let response = await axios.get(`${baseUrl}/streams`)
         return response.data
     } catch (e) {
+        throw new Error('Ocorreu um erro no sistema')
+    }
+}
+
+export async function makeRecommendation(title, stream) {
+    try {
+        await axios.post(`${baseUrl}/recommendations`, { title, stream, userId: id })
+    } catch (e) {
+        if (e.response.status === 401)
+            throw new Error('Faça login antes de recomendar um filme')
+
+        if (e.response.status === 400)
+            throw new Error(e.response.data.message)
+
         throw new Error('Ocorreu um erro no sistema')
     }
 }
