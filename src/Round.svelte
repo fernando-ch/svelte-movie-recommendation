@@ -1,17 +1,16 @@
 <script>
-    import { getCurrentRound } from "./service";
     import RecommendationRound from './RecommendationRound.svelte'
-
-    let roundPromise = getCurrentRound()
-
+    import VotingRound from './VotingRound.svelte'
+    import { round } from "./stores/roundStore"
+    import { userId } from "./stores/userIdStore"
 </script>
 
-{#await roundPromise}
-    Carregando round ...
-{:then round}
-    {#if round.status === 'Recommendation'}
-        <RecommendationRound {round}/>
+{#if $round}
+    {#if $round.status === 'Recommendation'}
+        <RecommendationRound userMovie={$round.movies?.find(movie => movie.userId === $userId)}/>
+    {:else if $round.status === 'Voting'}
+        <VotingRound movies={$round.movies}/>
     {/if}
-{:catch error}
-    {error}
-{/await}
+{:else}
+    Carregando round ...
+{/if}

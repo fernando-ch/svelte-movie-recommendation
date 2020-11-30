@@ -1,15 +1,13 @@
 <script>
-    import { userId } from "./store"
     import { getStreams, makeRecommendation } from './service'
 
-    export let round
+    export let userMovie
 
-    let previousMovie = round.movies?.find(movie => movie.userId === $userId)
-    let title = previousMovie?.title
-    let selectedStream = previousMovie?.stream
+    let title = userMovie?.title
+    let selectedStream = userMovie?.stream
     let streams = []
     let errorMessage
-    $: disabled = !selectedStream || !title || (previousMovie?.title === title && previousMovie?.stream === selectedStream)
+    $: disabled = !selectedStream || !title || (userMovie?.title === title && userMovie?.stream === selectedStream)
 
     getStreams()
         .then(streamList => streams = streamList)
@@ -18,12 +16,11 @@
     async function submitRecommendation() {
         try {
             await makeRecommendation(title, selectedStream)
-            previousMovie = { title, stream: selectedStream }
+            userMovie = { title, stream: selectedStream }
         } catch (e) {
             errorMessage = e.message
         }
     }
-
 </script>
 
 <form on:submit|preventDefault={submitRecommendation}>
@@ -41,14 +38,14 @@
     </select>
 
     <button type="submit" {disabled}>
-        {#if previousMovie}
+        {#if userMovie}
             Editar
         {:else}
             Recommendar
         {/if}
     </button>
 
-    {#if previousMovie}
+    {#if userMovie}
         <p>Sua recomendação já foi feita. Você pode editá-la se quiser</p>
     {/if}
 

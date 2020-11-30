@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { baseUrl } from './config'
-import { userId } from "./store";
+import { userId } from "./stores/userIdStore";
 
 let id
 
