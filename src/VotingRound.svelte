@@ -1,55 +1,34 @@
 <script>
     import VotingMovie from "./VotingMovie.svelte";
+    import { userId } from './stores/userIdStore'
 
     export let movies
 
-    $: indexedMovies = movies?.map((movie, index) =>  {
-        return { index, ...movie }
-    })
-
     function handleMessage(event) {
-        console.log({movie: event.detail.movie.title})
-        let index = indexedMovies.findIndex(movie => movie.title === event.detail.movie.title)
-        indexedMovies[index].teste = true
+        let index = movies.findIndex(movie => movie.title === event.detail.movie.title)
+        if (!movies[index].watchInformation) {
+            movies[index].watchInformation = [
+                {
+                    userId: $userId,
+                    watchedBeforeRound: event.detail.watched
+                }
+            ]
+        }
+        console.log(movies[index].watchInformation)
     }
 </script>
 
-<div id="container">
-    <div id="voting-card-list">
-        {#each indexedMovies.filter(movie => !movie.teste) as movie, index (movie.title)}
-            <VotingMovie {movie} on:message={handleMessage} disabled={index !== 0}/>
-        {/each}
-    </div>
-
-<!--    <div id="voted-card-list">-->
-<!--        {#each indexedMovies.filter(movie => movie.teste) as movie, index (movie.title)}-->
-<!--            <VotingMovie {movie}/>-->
-<!--        {/each}-->
-<!--    </div>-->
+<div id="voting-card-list">
+    <h2>Filmes para votar</h2>
+    {#each movies as movie (movie.title)}
+        <VotingMovie {movie} on:message={handleMessage}/>
+    {/each}
 </div>
 
 <style>
-    #container {
-        /*display: flex;*/
-        /*position: relative;*/
-        /*padding: 4rem;*/
-    }
-
     #voting-card-list {
-        position: relative;
-        /*display: flex;*/
-        /*align-items: center;*/
-        /*justify-content: center;*/
-        /*flex-direction: column;*/
-        /*padding: 3rem;*/
-    }
-
-    #voted-card-list {
-        position: relative;
-        /*display: flex;*/
-        /*align-items: center;*/
-        /*justify-content: center;*/
-        /*flex-direction: column;*/
-        /*padding: 3rem;*/
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 </style>
