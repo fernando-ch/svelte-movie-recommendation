@@ -9,6 +9,7 @@ export const round = readable(null, set => {
     });
 
     webSocket.addEventListener('message', event => {
+        console.log({round: JSON.parse(event.data)})
         set(JSON.parse(event.data))
     });
 

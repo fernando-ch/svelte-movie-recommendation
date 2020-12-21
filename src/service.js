@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { baseUrl } from './config'
-import { userId } from "./stores/userIdStore";
+import { userId } from "./stores/userIdStore"
 
 let id
 
@@ -45,6 +45,20 @@ export async function makeRecommendation(title, stream) {
     } catch (e) {
         if (e.response.status === 401)
             throw new Error('Faça login antes de recomendar um filme')
+
+        if (e.response.status === 400)
+            throw new Error(e.response.data.message)
+
+        throw new Error('Ocorreu um erro no sistema')
+    }
+}
+
+export async function vote(userId, title, watched) {
+    try {
+        await axios.post(`${baseUrl}/voting`, { userId, title, watched })
+    } catch (e) {
+        if (e.response.status === 401)
+            throw new Error('Faça login antes de votar em um filme')
 
         if (e.response.status === 400)
             throw new Error(e.response.data.message)

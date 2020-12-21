@@ -2,6 +2,7 @@
     import { getStreams, makeRecommendation } from './service'
 
     export let userMovie
+    export let tooManyPeopleAlreadyWatched
 
     let title = userMovie?.title
     let selectedStream = userMovie?.stream
@@ -24,6 +25,10 @@
 </script>
 
 <form on:submit|preventDefault={submitRecommendation}>
+    {#if tooManyPeopleAlreadyWatched}
+        <h2>Muitas pessoas já viram esse filme, escolha outro</h2>
+    {/if}
+
     <label for="movie-title">Título</label>
     <input id="movie-title" autocomplete="off" type="text" bind:value={title} on:change={() => title = title?.trim()}>
 
@@ -45,7 +50,7 @@
         {/if}
     </button>
 
-    {#if userMovie}
+    {#if userMovie && !tooManyPeopleAlreadyWatched}
         <p>Sua recomendação já foi feita. Você pode editá-la se quiser</p>
     {/if}
 
