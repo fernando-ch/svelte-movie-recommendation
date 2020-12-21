@@ -8,6 +8,7 @@
     let selectedStream = userMovie?.stream
     let streams = []
     let errorMessage
+    let submitting = false
     $: disabled = !selectedStream || !title || (userMovie?.title === title && userMovie?.stream === selectedStream)
 
     getStreams()
@@ -16,10 +17,13 @@
 
     async function submitRecommendation() {
         try {
+            submitting = true
             await makeRecommendation(title, selectedStream)
             userMovie = { title, stream: selectedStream }
         } catch (e) {
             errorMessage = e.message
+        } finally {
+            submitting = false
         }
     }
 </script>
@@ -42,13 +46,17 @@
         {/each}
     </select>
 
-    <button type="submit" {disabled}>
-        {#if userMovie}
-            Editar
-        {:else}
-            Recommendar
-        {/if}
-    </button>
+    {#if !submitting}
+        <button type="submit" {disabled}>
+            {#if userMovie}
+                Editar
+            {:else}
+                Recommendar
+            {/if}
+        </button>
+    {:else}
+        <button>Enviando...</button>
+    {/if}
 
     {#if userMovie && !tooManyPeopleAlreadyWatched}
         <p>Sua recomendação já foi feita. Você pode editá-la se quiser</p>
