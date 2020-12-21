@@ -30,7 +30,7 @@
     {/if}
 
     <label for="movie-title">Título</label>
-    <input id="movie-title" autocomplete="off" type="text" bind:value={title} on:change={() => title = title?.trim()}>
+    <input id="movie-title" autocomplete="off" type="text" autofocus bind:value={title} on:change={() => title = title?.trim()}>
 
     <label for="movie-stream">Stream</label>
     <select id="movie-stream" bind:value={selectedStream}>

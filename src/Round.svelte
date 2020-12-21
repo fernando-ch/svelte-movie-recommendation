@@ -1,6 +1,7 @@
 <script>
     import RecommendationRound from './RecommendationRound.svelte'
     import VotingRound from './VotingRound.svelte'
+    import WatchingRound from './WatchingRound.svelte'
     import { round } from "./stores/roundStore"
     import { userId } from "./stores/userIdStore"
 
@@ -17,6 +18,8 @@
         <RecommendationRound userMovie={$round.movies?.find(movie => movie.userId === $userId)} {tooManyPeopleAlreadyWatched}/>
     {:else if $round.status === 'Voting'}
         <VotingRound movies={$round.movies}/>
+    {:else}
+        <WatchingRound movies={$round.movies}/>
     {/if}
 {:else}
     Carregando round ...

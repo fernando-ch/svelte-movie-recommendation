@@ -6,7 +6,7 @@
     export let movie
 
     let watched = movie?.watchInformationList?.find(information => information.userId === $userId)?.watchedBeforeRound
-    $: totalUsersVoted = movie?.watchInformationList?.filter(watchInformation => watchInformation.watchedBeforeRound)?.length || 0
+    $: totalUsersVoted = movie?.watchInformationList?.filter(watchInformation => watchInformation.watchedBeforeRound !== null)?.length || 0
     $: isOwnPersonMovie = movie?.userId === $userId
 
     function changed() {
