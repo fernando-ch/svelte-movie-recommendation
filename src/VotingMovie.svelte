@@ -1,6 +1,4 @@
 <script>
-    import { fly } from 'svelte/transition'
-    import { createEventDispatcher } from 'svelte'
     import { userId } from './stores/userIdStore'
     import { vote } from './service'
 
@@ -11,14 +9,11 @@
     $: totalUsersVoted = movie?.watchInformationList?.filter(watchInformation => watchInformation.watchedBeforeRound)?.length || 0
     $: isOwnPersonMovie = movie?.userId === $userId
 
-    const dispatch = createEventDispatcher()
-
     function changed() {
-        // dispatch('message', { movie, watched })
         vote($userId, movie.title, watched)
     }
 </script>
-<div class="card" out:fly={{duration: 2000, y: 300}}>
+<div class="card">
     <span class="vote-counter">{totalUsersVoted}/{totalUsers}</span>
     <span class="title">
         {movie.title}

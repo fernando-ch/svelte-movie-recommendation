@@ -1,21 +1,7 @@
 <script>
     import VotingMovie from './VotingMovie.svelte'
-    import { userId } from './stores/userIdStore'
 
     export let movies
-
-    function handleMessage(event) {
-        let index = movies.findIndex(movie => movie.title === event.detail.movie.title)
-
-        if (!movies[index].watchInformationList) {
-            movies[index].watchInformationList = [
-                {
-                    userId: $userId,
-                    watchedBeforeRound: event.detail.watched
-                }
-            ]
-        }
-    }
 </script>
 
 <div id="voting-card-list">
