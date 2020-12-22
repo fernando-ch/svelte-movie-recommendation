@@ -1,5 +1,6 @@
 <script>
     import { getStreams, makeRecommendation } from './service'
+    import { round } from './stores/roundStore'
 
     export let userMovie
     export let tooManyPeopleAlreadyWatched
@@ -18,8 +19,9 @@
     async function submitRecommendation() {
         try {
             submitting = true
-            await makeRecommendation(title, selectedStream)
+            await makeRecommendation(userMovie?.id, title, selectedStream)
             userMovie = { title, stream: selectedStream }
+            round.forceUpdate()
         } catch (e) {
             errorMessage = e.message
         } finally {

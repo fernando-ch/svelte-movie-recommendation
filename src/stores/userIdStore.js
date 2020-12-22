@@ -1,12 +1,12 @@
 import { writable } from "svelte/store"
 
-const { subscribe, set } = writable(window.localStorage.getItem('userId'))
+const { subscribe, set } = writable(parseInt(window.localStorage.getItem('userId')))
 
 export const userId = {
     subscribe,
     update: (id) => {
         window.localStorage.setItem('userId', id)
-        set(id)
+        set(parseInt(id))
     },
     logout: () => {
         window.localStorage.removeItem('userId')

@@ -39,9 +39,14 @@ export async function getStreams() {
     }
 }
 
-export async function makeRecommendation(title, stream) {
+export async function makeRecommendation(movieId, title, stream) {
     try {
-        await axios.post(`${baseUrl}/recommendations`, { title, stream, userId: id })
+        if (movieId) {
+            await axios.put(`${baseUrl}/movies/${movieId}/`, { title, stream, userId: id })
+        }
+        else {
+            await axios.post(`${baseUrl}/movies/`, { title, stream, userId: id })
+        }
     } catch (e) {
         if (e.response.status === 401)
             throw new Error('Faça login antes de recomendar um filme')

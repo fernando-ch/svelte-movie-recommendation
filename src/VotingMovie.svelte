@@ -1,20 +1,22 @@
 <script>
     import { userId } from './stores/userIdStore'
+    import { round } from './stores/roundStore'
     import { vote } from './service'
 
     export let totalUsers
     export let movie
 
-    let watched = movie?.watchInformationList?.find(information => information.userId === $userId)?.watchedBeforeRound
-    $: totalUsersVoted = movie?.watchInformationList?.filter(watchInformation => watchInformation.watchedBeforeRound !== null)?.length || 0
+    let watched = movie?.movieVisualizations?.find(information => information.userId === $userId)?.watchedBeforeRound
+    $: totalUsersVoted = movie?.movieVisualizations?.filter(watchInformation => watchInformation.watchedBeforeRound !== null)?.length || 0
     $: isOwnPersonMovie = movie?.userId === $userId
 
-    function changed() {
-        vote($userId, movie.title, watched)
+    async function changed() {
+        await vote($userId, movie.title, watched)
+        round.forceUpdate()
     }
 </script>
 <div class="card">
-    <span class="vote-counter">{totalUsersVoted}/{totalUsers}</span>
+    <span class="vote-counter">{totalUsersVoted}/{totalUsers - 1}</span>
     <span class="title">
         {movie.title}
     </span>

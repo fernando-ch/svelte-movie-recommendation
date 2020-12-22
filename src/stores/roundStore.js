@@ -1,21 +1,23 @@
-import { readable } from "svelte/store"
-import { socketUrl } from '../config'
+import { writable } from "svelte/store"
+import { getCurrentRound } from '../service'
 
-export const round = readable(null, set => {
-    const webSocket = new WebSocket(socketUrl);
+const { subscribe, set } = writable(null, set => {
+    getCurrentRound().then(round => set(round))
 
-    webSocket.addEventListener('open', () => {
-        webSocket.send('Hello Server!');
-    });
-
-    webSocket.addEventListener('message', event => {
-        console.log({round: JSON.parse(event.data)})
-        set(JSON.parse(event.data))
-    });
+    const interval = setInterval(async () => {
+        const round = await getCurrentRound()
+        console.log({ round })
+        set(round)
+    }, 5000)
 
     return () => {
-        // The code 1000 means Normal closure; the connection successfully
-        // completed whatever purpose for which it was created.
-        webSocket.close(1000)
+        clearInterval(interval)
     }
 })
+
+export const round = {
+    subscribe,
+    forceUpdate: () => {
+        getCurrentRound().then(round => set(round))
+    }
+}
