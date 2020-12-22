@@ -8,6 +8,10 @@ const { subscribe, set } = writable(null, set => {
         const round = await getCurrentRound()
         console.log({ round })
         set(round)
+
+        if (round.step === 'Watching') {
+            clearInterval(interval)
+        }
     }, 5000)
 
     return () => {

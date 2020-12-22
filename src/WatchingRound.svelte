@@ -4,17 +4,27 @@
     export let movies
 </script>
 
-<div id="voting-card-list">
+<div class="voting-card-list">
     <h2>Filmes para assistir</h2>
-    {#each movies.sort((movie1, movie2) => movie1.watchOrder - movie2.watchOrder) as movie (movie.title)}
-        <WatchingMovie {movie}/>
-    {/each}
+
+    <div class="cards-container">
+        {#each movies.sort((movie1, movie2) => movie1.watchOrder - movie2.watchOrder) as movie (movie.title)}
+            <WatchingMovie {movie}/>
+        {/each}
+    </div>
 </div>
 
 <style>
-    #voting-card-list {
+    .voting-card-list {
         display: flex;
         flex-direction: column;
         align-items: center;
+        background-color: #000000ba;
+        height: 80%;
+    }
+
+    .cards-container {
+        height: 100%;
+        overflow: scroll;
     }
 </style>

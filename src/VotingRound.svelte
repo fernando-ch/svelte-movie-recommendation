@@ -4,17 +4,26 @@
     export let movies
 </script>
 
-<div id="voting-card-list">
+<div class="voting-card-list">
     <h2>Filmes para votar</h2>
-    {#each movies as movie (movie.title)}
-        <VotingMovie {movie} totalUsers={movies.length}/>
-    {/each}
+    <div class="cards-container">
+        {#each movies as movie (movie.title)}
+            <VotingMovie {movie} totalUsers={movies.length}/>
+        {/each}
+    </div>
 </div>
 
 <style>
-    #voting-card-list {
+    .voting-card-list {
         display: flex;
         flex-direction: column;
         align-items: center;
+        background-color: #000000ba;
+        height: 80%;
+    }
+
+    .cards-container {
+        height: 100%;
+        overflow: scroll;
     }
 </style>

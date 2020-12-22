@@ -65,6 +65,12 @@
     {/if}
 
     {#if errorMessage}
-        <p>{errorMessage}</p>
+        <p class="error">{errorMessage}</p>
     {/if}
 </form>
+
+<style>
+    form {
+        height: fit-content;
+    }
+</style>
