@@ -6,7 +6,6 @@ const { subscribe, set } = writable(null, set => {
 
     const interval = setInterval(async () => {
         const round = await getCurrentRound()
-        console.log({ round })
         set(round)
 
         if (round.step === 'Watching') {
