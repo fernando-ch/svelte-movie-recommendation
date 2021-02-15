@@ -3,7 +3,6 @@
     import { round } from './stores/roundStore'
     import { vote } from './service'
 
-    export let totalUsers
     export let movie
 
     let watched = movie?.movieVisualizations?.find(information => information.userId === $userId)?.watchedBeforeRound
@@ -16,7 +15,6 @@
     }
 </script>
 <div class="card">
-    <span class="vote-counter">{totalUsersVoted}/{totalUsers - 1}</span>
     <span class="title">
         {movie.title}
     </span>
@@ -62,11 +60,5 @@
 
     .choices {
         margin-top: 18px;
-    }
-
-    .vote-counter {
-        position: absolute;
-        right: 20px;
-        top: 23px;
     }
 </style>

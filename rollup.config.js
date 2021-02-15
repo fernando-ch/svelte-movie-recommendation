@@ -38,7 +38,7 @@ export default {
 	},
 	plugins: [
 		replace({
-			ENV_BASE_URL: process.env.BASE_URL || 'http://localhost:8080'
+			ENV_BASE_URL: process.env.BASE_URL || ''
 		}),
 
 		svelte({

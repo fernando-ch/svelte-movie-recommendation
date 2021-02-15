@@ -8,7 +8,7 @@
     <h2>Filmes para votar</h2>
     <div class="cards-container">
         {#each movies as movie (movie.title)}
-            <VotingMovie {movie} totalUsers={movies.length}/>
+            <VotingMovie {movie}/>
         {/each}
     </div>
 </div>
