@@ -1,5 +1,16 @@
 <script>
+    import { userId } from './stores/userIdStore'
+    import { round } from './stores/roundStore'
+    import { toggleWatched } from './service'
+
     export let movie
+
+    let watched = movie.movieVisualizations.find(it => it.userId === $userId)?.watchedDuringRound
+
+    async function changed() {
+        await toggleWatched($userId, movie.title, watched)
+        round.forceUpdate()
+    }
 </script>
 <div class="card">
     <span class="title">
@@ -7,6 +18,13 @@
     </span>
     <span class="stream">
         {movie.stream}
+    </span>
+    <span class="stream">
+        {movie.watchedTotal}/{$round.totalPeople}
+    </span>
+    <span class="watched">
+        Assistido
+        <input type=checkbox bind:checked={watched} on:change={changed}>
     </span>
 </div>
 
@@ -31,5 +49,11 @@
 
     .stream {
         /*font-size: 0.7em;*/
+    }
+
+    .watched {
+        margin-top: 10px;
+        position: absolute;
+        right: 10px;
     }
 </style>
