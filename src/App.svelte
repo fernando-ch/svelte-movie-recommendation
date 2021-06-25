@@ -1,7 +1,7 @@
 <script>
 	import LoginPage from './LoginPage.svelte'
 	import Round from './Round.svelte'
-	import { userId } from "./stores/userIdStore";
+	import { userId } from './stores/userIdStore'
 </script>
 
 {#if $userId}

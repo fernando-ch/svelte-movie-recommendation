@@ -71,3 +71,7 @@ export async function vote(userId, title, watched) {
         throw new Error('Ocorreu um erro no sistema')
     }
 }
+
+export function subscribeToNotification(userId, subscription) {
+    return axios.post(`${baseUrl}/subscriptions`, { userId, subscription })
+}

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w --host",
+    "dev": "HOST=0.0.0.0 BASE_URL=http://localhost:8080 rollup -c -w",
     "start": "sirv public"
   },
   "devDependencies": {
