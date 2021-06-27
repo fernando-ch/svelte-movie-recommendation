@@ -17,15 +17,31 @@
         {movie.title}
     </span>
     <span class="stream">
-        {movie.stream}
+        {#if movie.stream === 'Netflix'}
+            <img src="/netflix-icon.png" width="50" height="15" alt="{movie.stream}">
+        {:else if movie.stream === 'Disney Plus'}
+            <img src="/disney-plus-icon.png" width="60" height="40" alt="{movie.stream}">
+        {:else if movie.stream === 'Globo Play'}
+            <img src="/globoplay-icon.png" width="60" height="15" alt="{movie.stream}">
+        {:else if movie.stream === 'HBO'}
+            <img src="/hbo-icon.png" width="50" height="15" alt="{movie.stream}">
+        {:else if movie.stream === 'Prime'}
+            <img src="/prime-icon.png" width="70" height="30" alt="{movie.stream}">
+        {:else if movie.stream === 'Telecine'}
+            <img src="/telecine-icon.png" width="70" height="10" alt="{movie.stream}">
+        {:else}
+            {movie.stream}
+        {/if}
     </span>
-    <span class="stream">
-        {movie.watchedTotal}/{$round.totalPeople}
-    </span>
-    <span class="watched">
-        Assistido
-        <input type=checkbox bind:checked={watched} on:change={changed}>
-    </span>
+    <div style="position: relative">
+        <span>{movie.watchedTotal}/{$round.totalPeople}</span>
+        <span class="watched">
+            <label>
+                <span>Assistido</span>
+                <input type=checkbox bind:checked={watched} on:change={changed}>
+            </label>
+        </span>
+    </div>
 </div>
 
 <style>
@@ -34,7 +50,7 @@
         margin: 10px;
         display: flex;
         flex-direction: column;
-        height: 50px;
+        /*height: 65px;*/
         width: 220px;
         padding: 1.5em;
         border-radius: 16px;
@@ -48,12 +64,22 @@
     }
 
     .stream {
-        /*font-size: 0.7em;*/
+        margin-top: 10px;
+        margin-bottom: 10px;
     }
 
     .watched {
-        margin-top: 10px;
         position: absolute;
-        right: 10px;
+        right: 0;
+    }
+
+    label {
+        position: relative;
+    }
+
+    label > span {
+        position: absolute;
+        right: 20px;
+        bottom: 7px;
     }
 </style>
