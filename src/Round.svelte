@@ -9,10 +9,10 @@
     $: tooManyPeopleAlreadyWatched = $round?.step === 'Voting' &&
         $round?.movies?.find(movie => movie.userId === $userId)?.tooManyPeopleAlreadySaw
 
-    Notification.requestPermission().then(status => {
-        console.log('Notification permission status:', status);
-        if (status === 'granted') {
-            if ('serviceWorker' in navigator) {
+    if ('Notification' in window && navigator.serviceWorker) {
+        Notification.requestPermission().then(status => {
+            console.log('Notification permission status:', status);
+            if (status === 'granted') {
                 navigator.serviceWorker.register('service-worker.js').then(reg => {
                     console.log('Service Worker Registered!', reg);
 
@@ -33,8 +33,8 @@
                         console.log('Service Worker registration failed: ', err);
                     });
             }
-        }
-    });
+        });
+    }
 
     function subscribeUser() {
         if ('serviceWorker' in navigator) {
