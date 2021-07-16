@@ -22,16 +22,16 @@
         {movie.stream}
     </span>
     {#if !isOwnPersonMovie}
-    <div class="choices">
-        <label>
-            <input type="radio" bind:group={watched} on:change={changed} value={true}>
-            Já vi 😓
-        </label>
-        <label>
-            <input type="radio" bind:group={watched} on:change={changed} value={false}>
-            Ainda não vi 😀
-        </label>
-    </div>
+        <div class="choices">
+            <label>
+                <input type="radio" bind:group={watched} on:change={changed} value={true}>
+                Já vi 😓
+            </label>
+            <label>
+                <input type="radio" bind:group={watched} on:change={changed} value={false}>
+                Ainda não vi 😀
+            </label>
+        </div>
     {/if}
 </div>
 

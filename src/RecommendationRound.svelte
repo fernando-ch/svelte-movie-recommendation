@@ -69,18 +69,6 @@
     {/if}
 </form>
 
-<div class="dark-container">
-    <h2 class="title">Quem falta recomendar?</h2>
-
-    {#if $round.usersPendingRecommendation.length > 0}
-        <ul>
-            {#each $round.usersPendingRecommendation as userName}
-                <li>{userName}</li>
-            {/each}
-        </ul>
-    {/if}
-</div>
-
 <style>
     form {
         height: fit-content;

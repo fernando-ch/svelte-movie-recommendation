@@ -79,3 +79,7 @@ export function subscribeToNotification(userId, subscription) {
 export function toggleWatched(userId, title, watched) {
     return axios.put(`${baseUrl}/movie-visualization/toggle-watched`, { userId, title, watched })
 }
+
+export function newRound() {
+    return axios.post(`${baseUrl}/rounds`)
+}

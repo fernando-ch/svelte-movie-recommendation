@@ -37,7 +37,7 @@ self.addEventListener('install', (evt) => {
 self.addEventListener('push', function(event) {
     const data = event.data.json()
     const options = {
-        tag: data.title,
+        tag: data.tag,
         icon: '/cinema-maskable-icon.png',
         badge: '/movie-transparent-icon.png',
         body: data.message,
@@ -48,7 +48,7 @@ self.addEventListener('push', function(event) {
         },
     };
     event.waitUntil(
-        self.registration.showNotification('Rodada de Filmes', options)
+        self.registration.showNotification(data.title, options)
     );
 });
 
